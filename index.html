@@ -1,0 +1,108 @@
+<body ng-app="jasperTestApp">
+
+  <jasper-terry-calculator></jasper-terry-calculator>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+  <script>
+  var app = angular.module('jasperTestApp',[]);
+
+  app.directive('jasperTerryCalculator',function(){
+    return {
+      template:`
+      <!-- TABLE -->
+      <table>
+        <!-- ROW 1-->
+        <tr>
+          <td colspan="3">{{ calcCtrl.screenNumber }}</td>
+          <td ><button ng-click="calcCtrl.cancel()">C</button></td>
+        </tr>
+
+        <!-- TABLE ROW-->
+        <tr>
+          <!-- TABLE COLUMN-->
+          <td ><button ng-click="calcCtrl.addToScreen('1')">1</button></td>
+          <td ><button ng-click="calcCtrl.addToScreen('2')">2</button></td>
+          <td ><button ng-click="calcCtrl.addToScreen('3')">3</button></td>
+          <td ><button ng-click="calcCtrl.plus()">+</button></td>
+        </tr>
+
+        <!-- TABLE ROW-->
+        <tr>
+          <!-- TABLE COLUMN-->
+          <td ><button ng-click="calcCtrl.addToScreen('4')">4</button></td>
+          <td ><button ng-click="calcCtrl.addToScreen('5')">5</button></td>
+          <td ><button ng-click="calcCtrl.addToScreen('6')">6</button></td>
+          <td ><button>-</button></td>
+        </tr>
+
+        <!-- TABLE ROW-->
+        <tr>
+          <!-- TABLE COLUMN-->
+          <td ><button ng-click="calcCtrl.addToScreen('7')">7</button></td>
+          <td ><button ng-click="calcCtrl.addToScreen('8')">8</button></td>
+          <td ><button ng-click="calcCtrl.addToScreen('9')">9</button></td>
+          <td ><button>*</button></td>
+        </tr>
+
+        <!-- TABLE ROW-->
+        <tr>
+          <!-- TABLE COLUMN-->
+          <!-- colspan to merge cells-->
+          <td colspan="2" ng-click="calcCtrl.addToScreen('0')" ><button>0</button></td>
+          <td ><button ng-click="calcCtrl.equal()">=</button></td>
+          <td ><button>/</button></td>
+        </tr>
+      </table>
+      `,
+      controller:function(){
+        var ctrl = this;
+
+        ctrl.screenNumber = '';
+        ctrl.activeNumber = 0;
+
+        ctrl.activeMethod = '';
+
+        ctrl.plus = plus;
+        ctrl.addToScreen = addToScreen;
+        ctrl.cancel = cancel;
+
+        ctrl.equal = equal;
+
+
+        function plus(){
+          console.log(ctrl);
+          ctrl.activeNumber = ctrl.activeNumber + parseFloat(ctrl.screenNumber);
+          ctrl.screenNumber = '';
+          ctrl.activeMethod = '+';
+        }
+
+        function equal(){
+
+          console.log(ctrl);
+
+          switch (ctrl.activeMethod) {
+            case '+':
+              ctrl.activeNumber = parseFloat(ctrl.screenNumber) + parseFloat(ctrl.activeNumber);
+              break;
+          }
+
+          ctrl.screenNumber = ctrl.activeNumber;
+          // clear the active number to avoid repeat addition.
+          ctrl.activeNumber = '';
+        }
+
+        function cancel(){
+          ctrl.screenNumber = '';
+          ctrl.activeNumber = 0;
+        }
+
+        function addToScreen(number){
+          ctrl.screenNumber = ctrl.screenNumber + number;
+        }
+      },
+      controllerAs:'calcCtrl'
+    };
+  });
+
+  </script>
+</body>
