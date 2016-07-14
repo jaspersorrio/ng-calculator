@@ -32,7 +32,7 @@
           <td ><button ng-click="calcCtrl.addToScreen('4')">4</button></td>
           <td ><button ng-click="calcCtrl.addToScreen('5')">5</button></td>
           <td ><button ng-click="calcCtrl.addToScreen('6')">6</button></td>
-          <td ><button>-</button></td>
+          <td ><button ng-click="calcCtrl.minus()">-</button></td>
         </tr>
 
         <!-- TABLE ROW-->
@@ -41,7 +41,7 @@
           <td ><button ng-click="calcCtrl.addToScreen('7')">7</button></td>
           <td ><button ng-click="calcCtrl.addToScreen('8')">8</button></td>
           <td ><button ng-click="calcCtrl.addToScreen('9')">9</button></td>
-          <td ><button>*</button></td>
+          <td ><button ng-click="calcCtrl.multiply()">*</button></td>
         </tr>
 
         <!-- TABLE ROW-->
@@ -50,7 +50,7 @@
           <!-- colspan to merge cells-->
           <td colspan="2" ng-click="calcCtrl.addToScreen('0')" ><button>0</button></td>
           <td ><button ng-click="calcCtrl.equal()">=</button></td>
-          <td ><button>/</button></td>
+          <td ><button ng-click="calcCtrl.divide()">/</button></td>
         </tr>
       </table>
       `,
@@ -63,6 +63,10 @@
         ctrl.activeMethod = '';
 
         ctrl.plus = plus;
+        ctrl.minus = minus;
+        ctrl.multiply = multiply;
+        ctrl.divide = divide;
+
         ctrl.addToScreen = addToScreen;
         ctrl.cancel = cancel;
 
@@ -76,6 +80,27 @@
           ctrl.activeMethod = '+';
         }
 
+        function minus(){
+          console.log(ctrl);
+          ctrl.activeNumber = ctrl.activeNumber + parseFloat(ctrl.screenNumber);
+          ctrl.screenNumber = '';
+          ctrl.activeMethod = '-';
+        }
+
+        function multiply(){
+          console.log(ctrl);
+          ctrl.activeNumber = ctrl.activeNumber + parseFloat(ctrl.screenNumber);
+          ctrl.screenNumber = '';
+          ctrl.activeMethod = '*';
+        }
+
+        function divide(){
+          console.log(ctrl);
+          ctrl.activeNumber = ctrl.activeNumber + parseFloat(ctrl.screenNumber);
+          ctrl.screenNumber = '';
+          ctrl.activeMethod = '/';
+        }
+
         function equal(){
 
           console.log(ctrl);
@@ -83,6 +108,15 @@
           switch (ctrl.activeMethod) {
             case '+':
               ctrl.activeNumber = parseFloat(ctrl.screenNumber) + parseFloat(ctrl.activeNumber);
+              break;
+            case '-':
+              ctrl.activeNumber = parseFloat(ctrl.activeNumber) - parseFloat(ctrl.screenNumber);
+              break;
+            case '*':
+              ctrl.activeNumber = parseFloat(ctrl.screenNumber) * parseFloat(ctrl.activeNumber);
+              break;
+            case '/':
+              ctrl.activeNumber = parseFloat(ctrl.activeNumber) / parseFloat(ctrl.screenNumber);
               break;
           }
 
